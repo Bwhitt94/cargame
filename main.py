@@ -22,7 +22,6 @@ SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 600
 SPEED = 5
 
-
 DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 DISPLAYSURF.fill(WHITE)
 pygame.display.set_caption("Game")
@@ -66,25 +65,50 @@ class Player(pygame.sprite.Sprite):
     def draw(self, surface):
         surface.blit(self.image, self.rect)
 
+#Setting Up Sprites
 P1 = Player()
 E1 = Enemy()
 
- # Game loops begins
+#Creating Sprites Groups
+enemies = pygame.sprite.Group()
+enemies.add(E1)
+all_sprites = pygame-sprite.Group()
+all_sprites =.add(E1)
+all_sprites =.add(P1)
+
+#Adding a new User event
+INC_SPEED = pygame.USEREVENT + 1
+pygame.time.set_time(INC_SPEED, 1000)
+
+# Game loops begins
 while True:
     for event in pygame.event.get():
+
+        if event..type == INC_SPEED:
+            SPEED +=2
+                    
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
 
-    P1.update()
-    E1.move()
-
     DISPLAYSURF.fill(WHITE)
-    P1.draw(DISPLAYSURF)
-    E1.draw(DISPLAYSURF)
 
+    #Moves and Re-Draws all Sprites
+    for entity in all_sprites:
+        DISPLAYSURF.blit(entity.image, entity.rect)
+        entity.move()
+
+    if pygame.sprite.spritecollideany(P1, enemies):
+        DISPLAYSURF.fill(RED)
+        pygame.display.update()
+        for entity in all_sprites:
+            entity.kill()
+        time.sleep(2)
+        pygame.quit()
+        sys.exit()
+
+            
     pygame.display.update()
-    
     FramePerSec.tick(FPS)
 
     
