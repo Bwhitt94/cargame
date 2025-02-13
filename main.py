@@ -1,12 +1,15 @@
-import pygame
+import pygame, sys
 from pygame.locals import *
+import random, time
 
+#Initializing
 pygame.init()
 
+#Setting up FPS
 FPS = 60
 FramePerSec = pygame.time.Clock()
 
-#Prdefined some colors
+#Creating Colors
 BLUE = (0,0,255)
 RED = (255,0,0)
 GREEN = (0,255,0)
@@ -14,11 +17,13 @@ BLACK = (0,0,0)
 WHITE = (255,255,255)
 
 
-#Screen Information
+#Other Variables for use in the program
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 600
+SPEED = 5
 
-DISPLAYSURF = pygame.display.set_mode((400,600))
+
+DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 DISPLAYSURF.fill(WHITE)
 pygame.display.set_caption("Game")
 
@@ -30,7 +35,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.center=(random.randint(40,SCREEN_WIDTH-40),0)
 
     def move(self):
-        self.rect.move_ip(0,10)
+        self.rect.move_ip(0,SPEED)
         if (self.rect.bottom > 600):
             self.rect.top = 0
             self.rect.center = (random.randint(30,370),0)
@@ -79,6 +84,7 @@ while True:
     E1.draw(DISPLAYSURF)
 
     pygame.display.update()
+    
     FramePerSec.tick(FPS)
 
     
